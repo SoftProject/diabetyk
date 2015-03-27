@@ -12,3 +12,8 @@ Portal dla Diabetyków.
 # Baza danych:
 
 - PostgreSQL (9.2+)
+
+# Konfiguracja
+
+- użytkownik oraz hasło do smtp
+
