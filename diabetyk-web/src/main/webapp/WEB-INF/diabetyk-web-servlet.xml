@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="windows-1250"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:context="http://www.springframework.org/schema/context" xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+            http://www.springframework.org/schema/mvc
+            http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+
+
+            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+
+    <mvc:annotation-driven />
+
+    <mvc:resources location="/resources/" mapping="/resources/**" />
+
+    <context:property-placeholder location="classpath:system.properties" />
+
+    <context:component-scan base-package="
+        pl.com.softproject.diabetyk.web.controller,
+        pl.com.softproject.diabetyk.web.component" />
+
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" id="viewResolver">
+        <property name="prefix" value="/WEB-INF/jsp/" />
+        <property name="suffix" value=".jsp" />
+    </bean>
+
+    <bean class="org.springframework.context.support.ResourceBundleMessageSource" id="messageSource">
+        <property name="basename" value="messages" />
+        <property name="defaultEncoding" value="UTF-8" />
+    </bean>
+
+    <bean class="pl.com.softproject.diabetyk.web.service.CacheServiceImpl" id="cacheService" init-method="init"
+        scope="session">
+        <aop:scoped-proxy proxy-target-class="false" />
+    </bean>
+
+</beans>
