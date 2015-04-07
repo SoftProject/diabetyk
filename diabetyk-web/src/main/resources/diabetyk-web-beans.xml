@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+    <context:property-placeholder location="classpath:system.properties"/>
+
+    <bean class="pl.com.softproject.utils.osticket.integration.config.OsTicketConfig"
+          id="osTicketConfig">
+        <constructor-arg value="${osTicketUrl}"/>
+        <constructor-arg value="${osTicketApiKey}"/>
+    </bean>
+
+    <bean class="pl.com.softproject.utils.osticket.integration.encoder.Base64FileEncoder"
+          id="osTicketFileEncoder"/>
+
+    <bean class="pl.com.softproject.utils.osticket.integration.service.OsTicketIntegrationServiceImpl"
+          id="osTicketIntegrationService">
+        <property name="config" ref="osTicketConfig"/>
+        <property name="fileEncoder" ref="osTicketFileEncoder"/>
+    </bean>
+
+</beans>
