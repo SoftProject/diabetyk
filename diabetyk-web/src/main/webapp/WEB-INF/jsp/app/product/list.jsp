@@ -12,45 +12,73 @@
     </jsp:attribute>
 
     <jsp:body>
-
         <div class="container">
-
-            <div class="form-group">
-                <button class="btn btn-default" id="add"
-                        onclick="document.location.href='<c:url value="/app/product/add" />';">
-                    Dodaj produkt
-                </button>
-                <button class="btn btn-default" id="add"
-                        onclick="document.location.href='<c:url value="/app/auth/logout" />';">
-                    Wyloguj
-                </button>
-            </div>
-
-            <div class="page-header">
-                <h1>Lista produktów</h1>
-            </div>
-
-            <div class="panel panel-primary mt30">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Lista produktów</h3>
+            <div class="navbar navbar-inverse">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+                        </button> 
+                    </div>
+                    <div class="collapse navbar-collapse">
+                        <ul class="nav navbar-nav navbar-right"> 
+                            <li>
+                                <a href="/diabetyk-web/app/" ><span class="glyphicon glyphicon-th-large"></span> Gł&oacute;wna</a>
+                            </li>
+                            <li>
+                                <a  href='<c:url value="/app/auth/logout" />' > <span class="glyphicon glyphicon-off"></span> Wyloguj się</a>
+                            </li> 
+                        </ul>
+                    </div>
                 </div>
-                <div class="panel-body">
-                    <table id="products" class="display" cellspacing="0" width="100%">
-                        <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Nazwa</th>
-                            <th>Zamoderowany</th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                        </thead>
-
-                    </table>
-                </div>
-            </div>
-
+            </div> 
         </div>
+        <div class="container">    
+
+            <div class="col-md-12 jumbotron" style="padding-top: 0"> 
+
+                <div class="page-header">
+                    <h2>Lista produktów</h2>
+                </div>
+
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Lista produktów</h3>
+                    </div>
+                    <div class="panel-body">
+                        <table id="products" class="display" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nazwa</th>
+                                    <th>Zamoderowany</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+
+                        </table>
+                    </div>
+                </div>
+
+                <div class="container">
+
+                    <center>
+                        <button  type="button" class="btn btn-success btn-lg" onclick="document.location.href = '<c:url value="/app/product/add" />';">Dodaj produkt
+                        </button>
+
+                    </center>
+                </div>
+
+            </div> 
+
+
+
+            <p class="text-center ">Copyright © 2015, <a target="_blank" href="http://www.soft-project.pl ">soft-project.pl</a></p>
+
+        </div>   
+
+
 
         <script>
             $(document).ready(function () {

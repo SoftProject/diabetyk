@@ -7,46 +7,67 @@
 
     <jsp:attribute name="html_extra_header">
         <link href="<c:url value="/resources/css/login.css"/>" rel="stylesheet">
+        <link href="<c:url value="/resources/css/registation.css"/>" rel="stylesheet">
     </jsp:attribute>
 
     <jsp:body>
 
         <div class="container">
+            
+                <div class="col-md-3" ></div>
+                <div class="col-md-6"> 
+                    
+                        <form class="form-signin" role="form" action="<c:url value='/j_spring_security_check' />" method="post">
+                            <c:if test="${param.error != null}">
+                                <div id="loginErrorMsg" class="alert alert-danger">
+                                    Błędny login lub hasło
+                                </div>
+                            </c:if>
 
-            <form class="form-signin" role="form" action="<c:url value='/j_spring_security_check' />" method="post">
-                <c:if test="${param.error != null}">
-                    <div id="loginErrorMsg" class="alert alert-danger">
-                        Błędny login lub hasło
-                    </div>
-                </c:if>
+                            <t:message/>
+                            <div> 
+                                <center><img src="<c:url value="/resources/img/diabetyk.png"/>" alt=""/></center>
 
-                <t:message/>
+                                <h2 class="form-signin-heading" style="text-align: center">Zaloguj się</h2>
 
-                <h2 class="form-signin-heading">Zaloguj się</h2>
-                <label for="inputEmail" class="sr-only">Użytkownik</label>
-                <input type="text" name="username" id="inputEmail" class="form-control" placeholder="Użytkownik"
-                       required autofocus>
-                <label for="inputPassword" class="sr-only">Hasło</label>
-                <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Hasło"
-                       required>
+                            </div> 
 
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox" value="remember"> Zapamiętaj mnie
-                    </label>
+                            <div class="form-group">
+                                <div class="controls">
+                                    <label for="inputEmail" class="sr-only">Użytkownik</label>
+                                    <input type="text" name="username" id="inputEmail" class="form-control" placeholder="Użytkownik"
+                                           required autofocus>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="controls">
+                                    <label for="inputPassword" class="sr-only">Hasło</label>
+                                    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Hasło"
+                                           required>
+                                </div>
+                            </div>
+
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="remember"> Zapamiętaj mnie
+                                </label>
+                            </div>
+
+                            <div class="checkbox">
+                                <a href="<c:url value="/app/resetPassword/form"/>">Zapomniałem hasło</a>
+                            </div>
+
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
+                            <button class="btn btn-lg btn-primary btn-block" type="submit">Zaloguj</button>
+                        </form>
+                        <div class="form-links">
+                            <a href="/diabetyk-web/" style="color: black">Wróć do głównej</a>
+                        </div>
                 </div>
-
-                <div class="checkbox">
-                    <a href="<c:url value="/app/resetPassword/form"/>">Zapomniałem hasło</a>
-                </div>
-
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Zaloguj</button>
-            </form>
-
-        </div>
-
+            </div>
+     
     </jsp:body>
 
 </t:genericpage>

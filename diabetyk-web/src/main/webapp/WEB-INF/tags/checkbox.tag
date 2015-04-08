@@ -8,8 +8,8 @@
 
 <spring:bind path="${path}">
     <div class="form-group ${status.error ? 'has-error' : '' }">
-        <div class="col-md-3 control-label"></div>
-        <div class="col-md-4">
+        
+        <div>
             <label>
                 <form:checkbox path="${path}"/> ${label}</label>
 

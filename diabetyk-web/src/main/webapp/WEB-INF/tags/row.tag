@@ -10,10 +10,13 @@
 <%@ attribute name="isCollection" required="false" type="java.lang.Boolean" %>
 
 <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-4">
         <p>${description}</p>
     </div>
-    <div class="col-md-9">
+    <div class="col-md-1">
+        <p><span class="glyphicon glyphicon-hand-right"/></p>
+    </div>
+    <div class="col-md-7">
         <c:choose>
             <c:when test="${isDate}">
                 <t:date field="${value}"/>

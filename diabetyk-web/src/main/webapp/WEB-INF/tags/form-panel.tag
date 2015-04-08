@@ -21,13 +21,22 @@
             <div class="form-body">
                 <jsp:doBody/>
             </div>
-            <div class="form-actions fluid">
-                <div class="col-md-offset-3 col-md-9">
-                    <button type="submit" class="btn blue" id="submit">Zapisz</button>
-                    <button type="button" class="btn default" onclick="window.history.back();" id="cancel">Anuluj
-                    </button>
+
+            <div class="form-actions fluid ">
+                <div class="row">
+
+                    <div  class=" col-md-offset-3 col-md-3 " style="margin-bottom: 10px;"> 
+
+                        <button style="display: block; width: 100%" type="submit" class="btn btn-success btn-lg" id="submit">Zapisz</button>
+                    </div>
+                    <div class="col-md-3 ">    
+                        <button style="display: block; width: 100%" type="button" class="btn btn-warning btn-lg" onclick="window.history.back();" id="cancel">Anuluj
+                        </button>
+                    </div>
                 </div>
             </div>
-        </form:form>
-    </div>
+        </div>
+
+    </form:form>
+</div>
 </div>
