@@ -8,6 +8,7 @@ import pl.com.softproject.diabetyk.core.dao.ProductDAO;
 import pl.com.softproject.diabetyk.core.model.Product;
 import pl.com.softproject.diabetyk.core.model.UserData;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -66,5 +67,10 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> findAllOrderedByName() {
 
         return productDAO.findAllOrderedByName();
+    }
+
+    @Override
+    public List<Product> findByAddDateGreaterThan(Date date) {
+        return productDAO.findByAddDateGreaterThan(date);
     }
 }

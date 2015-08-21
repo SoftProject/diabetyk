@@ -1,5 +1,8 @@
 package pl.com.softproject.diabetyk.core.model;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
+import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -14,6 +17,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Size;
@@ -68,6 +73,7 @@ public class Product extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "userdata_id")
+    @JsonIgnore
     private UserData author;
 
     @Column(name = "is_moderated", columnDefinition = "boolean default false", nullable = false)
@@ -160,15 +166,19 @@ public class Product extends BaseEntity {
             joinColumns = {@JoinColumn(name = "product_id", nullable = false, updatable = true)},
             inverseJoinColumns = {
                     @JoinColumn(name = "category_id", nullable = false, updatable = true)})
+    @JsonIgnore
     private Set<ProductCategory> categories = new HashSet<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
+    @JsonIgnore
     private Set<Like> likes = new LinkedHashSet<>();
 
     @Column(name = "likes_plus", columnDefinition = "INTEGER DEFAULT 0")
+    @JsonIgnore
     private int likesPlus;
 
     @Column(name = "likes_minus", columnDefinition = "INTEGER DEFAULT 0")
+    @JsonIgnore
     private int likesMinus;
 
     @Transient
@@ -179,6 +189,9 @@ public class Product extends BaseEntity {
 
     @Transient
     private Double amountOfProteinExchangers;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date addDate;
 
     public Product() {
 
@@ -568,5 +581,13 @@ public class Product extends BaseEntity {
     public void setLikesMinus(int likesMinus) {
 
         this.likesMinus = likesMinus;
+    }
+
+    public Date getAddDate() {
+        return addDate;
+    }
+
+    public void setAddDate(Date addDate) {
+        this.addDate = addDate;
     }
 }
