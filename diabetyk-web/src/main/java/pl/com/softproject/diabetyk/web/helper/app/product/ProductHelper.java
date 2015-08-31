@@ -19,8 +19,13 @@ import pl.com.softproject.diabetyk.core.service.ProductCategoryService;
 import pl.com.softproject.diabetyk.core.service.ProductService;
 import pl.com.softproject.diabetyk.core.service.UserDataService;
 import pl.com.softproject.diabetyk.web.service.CacheService;
+import pl.com.softproject.diabetyk.web.util.DateTimeValidator;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -224,5 +229,30 @@ public class ProductHelper {
         newLike.setType(LikeType.DISLIKE);
 
         likeService.add(newLike);
+    }
+
+    public List<Product> updateProductList(String lastCheckDate){
+        DateTimeValidator dateTimeValidator = new DateTimeValidator();
+
+        List<Product> productList = new ArrayList<>();
+
+        if (dateTimeValidator.validate(lastCheckDate)) {
+
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+            Date dateCheck = null;
+
+            try {
+                dateCheck = df.parse(lastCheckDate);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            if (userDataService
+                    .isUserInAnyRole(Role.ROLE_MODERATOR, Role.ROLE_ADMIN, Role.ROLE_SYS_ADMIN)) {
+                productList = productService.findByAddDateGreaterThan(dateCheck);
+            }
+
+        }
+        return productList;
     }
 }

@@ -1,6 +1,9 @@
 package pl.com.softproject.diabetyk.web.controller.app.product;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -56,6 +59,20 @@ public class ProductController extends BaseController {
         logCalledMethod();
 
         return productHelper.getProductsList();
+    }
+
+    @RequestMapping(value = "/list/json/{lastCheckDate}", method = RequestMethod.GET, produces = "application/json;charset=utf8")
+    @ResponseBody
+    public ResponseEntity<?> updateProductList(@PathVariable("lastCheckDate") String lastCheckDate) {
+
+        logCalledMethod();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json; charset=utf-8");
+
+        List<Product> products = productHelper.updateProductList(lastCheckDate);
+
+        return new ResponseEntity<>(products, headers, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{productId}/details", method = RequestMethod.GET)
