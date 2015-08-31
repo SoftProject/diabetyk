@@ -7,7 +7,6 @@ import org.springframework.data.repository.query.Param;
 import pl.com.softproject.diabetyk.core.model.Product;
 import pl.com.softproject.diabetyk.core.model.UserData;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -22,6 +21,4 @@ public interface ProductDAO extends JpaRepository<Product, Long> {
 
     @Query("select p from Product p order by p.name")
     public List<Product> findAllOrderedByName();
-
-    public List<Product> findByAddDateGreaterThan(Date date);
 }
