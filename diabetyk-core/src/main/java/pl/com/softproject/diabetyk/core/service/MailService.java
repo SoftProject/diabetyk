@@ -10,25 +10,25 @@ import java.util.Map;
  */
 public interface MailService {
 
-    public void sendMail(final String mailTo, final String subject, final String messageText);
+    void sendMail(final String mailTo, final String subject, final String messageText);
 
-    public void sendMail(final String mailTo, final String subject, final String messageText,
+    void sendMail(final String mailTo, final String subject, final String messageText,
                          final Map<String, File> attachments);
 
-    public void sendMail(final String[] mailTo, final String subject, final String messageText,
+    void sendMail(final String[] mailTo, final String subject, final String messageText,
                          final Map<String, File> attachments);
 
-    public void sendMail(final String[] mailTo, final String[] mailCc, final String[] mailBcc,
+    void sendMail(final String[] mailTo, final String[] mailCc, final String[] mailBcc,
                          final String subject, final String messageText,
                          final Map<String, File> attachments);
 
-    public void sendMail(final String mailTo, final String subject, final String template,
+    void sendMail(final String mailTo, final String subject, final String template,
                          final Map<String, Object> params, final Map<String, File> attachments);
 
-    public void sendMail(final String[] mailTo, final String subject, final String template,
+    void sendMail(final String[] mailTo, final String subject, final String template,
                          final Map<String, Object> params, final Map<String, File> attachments);
 
-    public void sendMail(final String[] mailTo, final String[] mailCc, final String[] mailBcc,
+    void sendMail(final String[] mailTo, final String[] mailCc, final String[] mailBcc,
                          final String subject, final String template,
                          final Map<String, Object> params, final Map<String, File> attachments);
 }

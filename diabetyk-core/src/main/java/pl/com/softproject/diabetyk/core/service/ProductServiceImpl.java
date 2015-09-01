@@ -1,5 +1,6 @@
 package pl.com.softproject.diabetyk.core.service;
 
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -70,7 +71,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> findByAddDateGreaterThan(Date date) {
+    public List<Product> findByAddDateGreaterThan(DateTime date) {
         return productDAO.findByAddDateGreaterThan(date);
     }
 }

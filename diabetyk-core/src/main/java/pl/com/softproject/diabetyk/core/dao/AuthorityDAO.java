@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface AuthorityDAO extends JpaRepository<Authority, AuthorityId> {
 
-    public List<Authority> findByUserName(String userName);
+    List<Authority> findByUserName(String userName);
 
-    public List<Authority> findByAuthority(String authority);
+    List<Authority> findByAuthority(String authority);
 }

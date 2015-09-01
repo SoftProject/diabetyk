@@ -10,41 +10,41 @@ import pl.com.softproject.diabetyk.core.model.UserData;
  */
 public interface UserDataService extends CrudService<UserData, Long> {
 
-    public UserData findByLogin(String login);
+    UserData findByLogin(String login);
 
-    public String getLoggedUserLogin();
+    String getLoggedUserLogin();
 
-    public UserData getLoggedUserData();
+    UserData getLoggedUserData();
 
-    public void add(UserData element, Role... roles);
+    void add(UserData element, Role... roles);
 
-    public void update(UserData element, String password, String ipAddress);
+    void update(UserData element, String password, String ipAddress);
 
-    public void disableUser(long id);
+    void disableUser(long id);
 
-    public void enableUser(long id);
+    void enableUser(long id);
 
-    public UserData findByEmail(String email);
+    UserData findByEmail(String email);
 
-    public UserData findByToken(String token);
+    UserData findByToken(String token);
 
-    public boolean isUserInRole(Role role);
+    boolean isUserInRole(Role role);
 
-    public boolean isUserInAnyRole(Role... roles);
+    boolean isUserInAnyRole(Role... roles);
 
-    public boolean isUserInRole(UserData userData, Role role);
+    boolean isUserInRole(UserData userData, Role role);
 
-    public boolean isUserInAnyRole(UserData userData, Role... roles);
+    boolean isUserInAnyRole(UserData userData, Role... roles);
 
-    public boolean hasLoggedUser();
+    boolean hasLoggedUser();
 
-    public void updateBadLoginValue(String userName);
+    void updateBadLoginValue(String userName);
 
-    public void clearBadLoginValue(String userName);
+    void clearBadLoginValue(String userName);
 
     void createUser(UserData userData);
 
     void createUser(UserData userData, boolean enabled, Role... roles);
 
-    public UserData findByResetPasswordKey(String token);
+    UserData findByResetPasswordKey(String token);
 }

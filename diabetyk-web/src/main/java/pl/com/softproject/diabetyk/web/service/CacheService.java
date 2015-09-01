@@ -9,9 +9,9 @@ import pl.com.softproject.diabetyk.core.model.UserData;
  */
 public interface CacheService {
 
-    public String getLoggedUserLogin();
+    String getLoggedUserLogin();
 
-    public UserData getLoggedUserData();
+    UserData getLoggedUserData();
 
-    public boolean hasLoggedUser();
+    boolean hasLoggedUser();
 }

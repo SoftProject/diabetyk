@@ -1,5 +1,7 @@
 package pl.com.softproject.diabetyk.core.service;
 
+import org.joda.time.DateTime;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -19,7 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ContextConfiguration({"/test-diabetyk-core-persistence-embedded.xml",
                        "/test-diabetyk-core-mail.xml", "/test-diabetyk-core-security.xml"})
 @TransactionConfiguration
-//@Ignore
+@Ignore
 public class ProductServiceImplTest extends AbstractTransactionalJUnit4SpringContextTests {
 
     @Autowired
@@ -31,27 +33,18 @@ public class ProductServiceImplTest extends AbstractTransactionalJUnit4SpringCon
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
 
         // daty produktów - przed ostatnim sprawdzeniem
-        String dateB1 = "2014-10-10-00-00-00";
-        String dateB2 = "2014-08-01-00-00-00";
-        String dateB3 = "2015-02-01-23-59-00";
-
-        Date dateBeforeLastCheck_1 = format.parse(dateB1);
-        Date dateBeforeLastCheck_2 = format.parse(dateB2);
-        Date dateBeforeLastCheck_3 = format.parse(dateB3);
+        DateTime dateBeforeLastCheck_1 = new DateTime(2014, 10, 10, 0, 0, 0);
+        DateTime dateBeforeLastCheck_2 = new DateTime(2014, 10, 10, 0, 0, 0);
+        DateTime dateBeforeLastCheck_3 = new DateTime(2014, 10, 10, 0, 0, 0);
 
         // data ostatniej weryfikacji
-        String dateLC = "2015-02-02-00-00-01";
-
-        Date lastCheckDate =  format.parse(dateLC);
+        DateTime lastCheckDate = new DateTime(2015, 02, 02, 0, 0, 1);
 
         // daty produktow - po ostatnim sprawdzeniu
-        String dateA1 = "2015-02-10-00-00-00";
-        String dateA2 = "2015-03-01-00-00-00";
-        String dateA3 = "2015-04-19-00-00-00";
 
-        Date dateAfterLastCheck_1 = format.parse(dateA1);
-        Date dateAfterLastCheck_2 = format.parse(dateA2);
-        Date dateAfterLastCheck_3 = format.parse(dateA3);
+        DateTime dateAfterLastCheck_1 = new DateTime(2015, 02, 10, 0, 0, 0);;
+        DateTime dateAfterLastCheck_2 = new DateTime(2015, 03, 01, 0, 0, 0);;
+        DateTime dateAfterLastCheck_3 = new DateTime(2015, 04, 19, 0, 0, 0);;
 
         // produkty
         Product product1 = new Product();
@@ -86,6 +79,5 @@ public class ProductServiceImplTest extends AbstractTransactionalJUnit4SpringCon
         productService.add(product6);
 
         assertThat(productService.findByAddDateGreaterThan(lastCheckDate).size()).isEqualTo(3);
-
     }
 }

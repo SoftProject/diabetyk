@@ -11,11 +11,11 @@ import pl.com.softproject.diabetyk.core.model.UserData;
  */
 public interface GiodoLogService extends CrudService<GiodoLog, Long> {
 
-    public void saveLogIn(String userName);
+    void saveLogIn(String userName);
 
-    public void saveLogOut(String userName);
+    void saveLogOut(String userName);
 
-    public void saveLog(GiodoOperationType giodoOperationType, String message, UserData userData);
+    void saveLog(GiodoOperationType giodoOperationType, String message, UserData userData);
 
-    public void saveLog(GiodoOperationType giodoOperationType, String message);
+    void saveLog(GiodoOperationType giodoOperationType, String message);
 }

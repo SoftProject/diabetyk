@@ -1,5 +1,6 @@
 package pl.com.softproject.diabetyk.core.dao;
 
+import org.joda.time.DateTime;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -18,10 +19,10 @@ import java.util.List;
 public interface ProductDAO extends JpaRepository<Product, Long> {
 
     @Query("select distinct p from Product p where p.author = :author or p.moderated = true order by p.name")
-    public List<Product> findAllMyAndModerated(@Param("author") UserData author);
+    List<Product> findAllMyAndModerated(@Param("author") UserData author);
 
     @Query("select p from Product p order by p.name")
-    public List<Product> findAllOrderedByName();
+    List<Product> findAllOrderedByName();
 
-    public List<Product> findByAddDateGreaterThan(Date date);
+    List<Product> findByAddDateGreaterThan(DateTime date);
 }

@@ -1,5 +1,8 @@
 package pl.com.softproject.diabetyk.web.helper.app.product;
 
+import org.apache.commons.validator.routines.DateValidator;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomCollectionEditor;
 import org.springframework.security.access.AccessDeniedException;
@@ -19,17 +22,9 @@ import pl.com.softproject.diabetyk.core.service.ProductCategoryService;
 import pl.com.softproject.diabetyk.core.service.ProductService;
 import pl.com.softproject.diabetyk.core.service.UserDataService;
 import pl.com.softproject.diabetyk.web.service.CacheService;
-import pl.com.softproject.diabetyk.web.util.DateTimeValidator;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+
+import java.util.*;
 
 /**
  * Class ProductHelper
@@ -150,10 +145,10 @@ public class ProductHelper {
             Map<String, Object> map = new HashMap<>(4);
             map.put("id", product.getId());
             map.put("name", product.getName());
-            map.put("isModerated", product.isModerated() ? "Tak" : "Nie");
+            map.put("isModerated", product.isModerated() ? "yes" : "no");
             map.put("editable",
                     product.getAuthor().getId().equals(cacheService.getLoggedUserData().getId())
-                    ? "yes" : "no");
+                            ? "yes" : "no");
 
             list.add(map);
         }
@@ -231,28 +226,83 @@ public class ProductHelper {
         likeService.add(newLike);
     }
 
-    public List<Product> updateProductList(String lastCheckDate){
-        DateTimeValidator dateTimeValidator = new DateTimeValidator();
+    public List<Map> updateProductList(String lastCheckDate) {
 
         List<Product> productList = new ArrayList<>();
+        String pattern = "yyyy-MM-dd-HH-mm-ss";
 
-        if (dateTimeValidator.validate(lastCheckDate)) {
+        if(DateValidator.getInstance().isValid(lastCheckDate, pattern)) {
 
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
-            Date dateCheck = null;
-
-            try {
-                dateCheck = df.parse(lastCheckDate);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+            DateTime dateTime = DateTime.parse(lastCheckDate, DateTimeFormat.forPattern(pattern));
 
             if (userDataService
                     .isUserInAnyRole(Role.ROLE_MODERATOR, Role.ROLE_ADMIN, Role.ROLE_SYS_ADMIN)) {
-                productList = productService.findByAddDateGreaterThan(dateCheck);
+                productList = productService.findByAddDateGreaterThan(dateTime);
+            }
+        }
+
+        List<Map> list = new ArrayList<>(productList.size());
+
+        for (Product product : productList) {
+
+            Map<String, Object> productCategories = new HashMap<>(2);
+            for (ProductCategory productCategory : product.getCategories()){
+                productCategories.put("id", productCategory.getId());
+                productCategories.put("name", productCategory.getName());
             }
 
+            Map<String, Object> map = new HashMap<>(40);
+            map.put("id", product.getId());
+            map.put("name", product.getName());
+            map.put("isModerated", product.isModerated() ? "yes" : "no");
+            map.put("editable",
+                    product.getAuthor().getId().equals(cacheService.getLoggedUserData().getId())
+                            ? "yes" : "no");
+            map.put("description", replaceNull(product.getDescription()));
+            map.put("fat", replaceNull(product.getFat()));
+            map.put("protein", replaceNull(product.getProtein()));
+            map.put("carbohydrates", replaceNull(product.getCarbohydrates()));
+            map.put("weightForOneWw", replaceNull(product.getWeightForOneWw()));
+            map.put("homeMeasure", replaceNull(product.getHomeMeasure()));
+            map.put("wwInPortion", replaceNull(product.getWwInPortion()));
+            map.put("author", product.getAuthor().getId());
+            map.put("productNormalizedName", replaceNull(product.getProductNormalizedName()));
+            map.put("allergen", product.isAllergen() ? "yes" : "no");
+            map.put("glutenFree", product.isGlutenFree() ? "yes" : "no");
+            map.put("saturatedFattyAcids", replaceNull(product.getSaturatedFattyAcids()));
+            map.put("oneSaturatedFattyAcids", replaceNull(product.getOneSaturatedFattyAcids()));
+            map.put("multiSaturatedFattyAcids", replaceNull(product.getMultiSaturatedFattyAcids()));
+            map.put("cholesterol", replaceNull(product.getCholesterol()));
+            map.put("saccharose", replaceNull(product.getSaccharose()));
+            map.put("cellulose", replaceNull(product.getCellulose()));
+            map.put("calcium", replaceNull(product.getCalcium()));
+            map.put("magnesium", replaceNull(product.getMagnesium()));
+            map.put("iron", replaceNull(product.getIron()));
+            map.put("zinc", replaceNull(product.getZinc()));
+            map.put("vitaminD", replaceNull(product.getVitaminD()));
+            map.put("vitaminB1", replaceNull(product.getVitaminB1()));
+            map.put("vitaminB2",  replaceNull(product.getVitaminB2()));
+            map.put("vitaminPp", replaceNull(product.getVitaminPp()));
+            map.put("vitaminB6", replaceNull(product.getVitaminB6()));
+            map.put("folicAcid", replaceNull(product.getFolicAcid()));
+            map.put("vitaminB12", replaceNull(product.getVitaminB12()));
+            map.put("vitaminC", replaceNull(product.getVitaminC()));
+            map.put("categories",  replaceNull(productCategories));
+            map.put("likesPlus", replaceNull(product.getLikesPlus()));
+            map.put("likesMinus", replaceNull(product.getLikesMinus()));
+            map.put("energy", replaceNull(product.getEnergy()));
+            map.put("amountOfCarbohydrateExchangers", replaceNull(product.getAmountOfCarbohydrateExchangers()));
+            map.put("amountOfProteinExchangers", replaceNull(product.getAmountOfProteinExchangers()));
+            map.put("addDate", product.getAddDate());
+
+            list.add(map);
         }
-        return productList;
+
+        return list;
+
+    }
+
+    private String replaceNull(Object input) {
+        return input == null ? "" : input.toString();
     }
 }
