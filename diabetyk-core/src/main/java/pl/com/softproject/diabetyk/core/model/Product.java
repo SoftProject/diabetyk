@@ -143,7 +143,6 @@ public class Product extends BaseEntity {
             joinColumns = {@JoinColumn(name = "product_id", nullable = false, updatable = true)},
             inverseJoinColumns = {
                     @JoinColumn(name = "category_id", nullable = false, updatable = true)})
-    @JsonIgnore
     private Set<ProductCategory> categories = new HashSet<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
@@ -151,11 +150,9 @@ public class Product extends BaseEntity {
     private Set<Like> likes = new LinkedHashSet<>();
 
     @Column(name = "likes_plus")
-    @JsonIgnore
     private int likesPlus;
 
     @Column(name = "likes_minus")
-    @JsonIgnore
     private int likesMinus;
 
     @Transient
