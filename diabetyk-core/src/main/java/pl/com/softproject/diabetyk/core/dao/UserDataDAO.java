@@ -11,11 +11,11 @@ import pl.com.softproject.diabetyk.core.model.UserData;
  */
 public interface UserDataDAO extends JpaRepository<UserData, Long> {
 
-    public UserData findByLogin(String login);
+    UserData findByLogin(String login);
 
-    public UserData findByEmail(String email);
+    UserData findByEmail(String email);
 
-    public UserData findByRegistrationToken(String token);
+    UserData findByRegistrationToken(String token);
 
-    public UserData findByResetPasswordKey(String token);
+    UserData findByResetPasswordKey(String token);
 }

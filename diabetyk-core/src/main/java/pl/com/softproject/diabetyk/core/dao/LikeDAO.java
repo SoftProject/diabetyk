@@ -14,5 +14,5 @@ import pl.com.softproject.diabetyk.core.model.UserData;
  */
 public interface LikeDAO extends JpaRepository<Like, Long> {
 
-    public Like findByProductAndAuthorAndType(Product product, UserData userData, LikeType type);
+    Like findByProductAndAuthorAndType(Product product, UserData userData, LikeType type);
 }

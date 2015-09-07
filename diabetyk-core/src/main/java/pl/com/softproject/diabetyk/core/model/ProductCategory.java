@@ -1,5 +1,7 @@
 package pl.com.softproject.diabetyk.core.model;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -29,9 +31,11 @@ public class ProductCategory extends BaseEntity {
 
     @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "category_id")
+    @JsonIgnore
     private ProductCategory parent;
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "categories")
+    @JsonIgnore
     private Set<Product> products = new HashSet<>();
 
     public ProductCategory() {

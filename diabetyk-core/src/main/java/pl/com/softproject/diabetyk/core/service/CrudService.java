@@ -9,13 +9,13 @@ import java.util.List;
  */
 public interface CrudService<T, I> {
 
-    public T getElement(I id);
+    T getElement(I id);
 
-    public List<T> getElements();
+    List<T> getElements();
 
-    public void add(T element);
+    void add(T element);
 
-    public void update(T element);
+    void update(T element);
 
-    public void delete(T element);
+    void delete(T element);
 }

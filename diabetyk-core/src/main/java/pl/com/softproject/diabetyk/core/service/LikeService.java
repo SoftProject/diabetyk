@@ -11,7 +11,7 @@ import pl.com.softproject.diabetyk.core.model.UserData;
  */
 public interface LikeService extends CrudService<Like, Long> {
 
-    public Like findLikeForProductAndUser(Product product, UserData userData);
+    Like findLikeForProductAndUser(Product product, UserData userData);
 
-    public Like findDislikeForProductAndUser(Product product, UserData userData);
+    Like findDislikeForProductAndUser(Product product, UserData userData);
 }

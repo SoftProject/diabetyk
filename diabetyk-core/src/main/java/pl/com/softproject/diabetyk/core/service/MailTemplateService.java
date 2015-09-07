@@ -9,5 +9,5 @@ import java.util.Map;
  */
 public interface MailTemplateService {
 
-    public String mergeTemplate(String templateName, Map<String, Object> map);
+    String mergeTemplate(String templateName, Map<String, Object> map);
 }

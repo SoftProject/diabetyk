@@ -1,5 +1,9 @@
 package pl.com.softproject.diabetyk.core.model;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.hibernate.annotations.Type;
+import org.joda.time.DateTime;
+
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -37,21 +41,17 @@ public class Product extends BaseEntity {
     private String description;
 
     @DecimalMin("0")
-    @Column(columnDefinition = "DOUBLE PRECISION")
     private Double fat;
 
     @DecimalMin("0")
-    @Column(columnDefinition = "DOUBLE PRECISION")
     private Double protein;
 
     @DecimalMin("0")
-    @Column(columnDefinition = "DOUBLE PRECISION")
     private Double carbohydrates;
 
     /**
      * waga na jeden wymiennik węglowodanowy
      */
-    @Column(columnDefinition = "DOUBLE PRECISION")
     private Double weightForOneWw;
 
     /**
@@ -68,90 +68,73 @@ public class Product extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "userdata_id")
+    @JsonIgnore
     private UserData author;
 
-    @Column(name = "is_moderated", columnDefinition = "boolean default false", nullable = false)
+    @Column(name = "is_moderated", nullable = false)
     private boolean moderated = false;
 
     @Column(name = "product_normalized_name", unique = true)
     private String productNormalizedName;
 
-    @Column(name = "is_allergen", columnDefinition = "boolean default false", nullable = false)
+    @Column(name = "is_allergen", nullable = false)
     private boolean allergen = false;
 
-    @Column(name = "is_glutenFree", columnDefinition = "boolean default false", nullable = false)
+    @Column(name = "is_glutenFree", nullable = false)
     private boolean glutenFree = false;
 
     @DecimalMin("0")
-    @Column(columnDefinition = "DOUBLE PRECISION")
     private Double saturatedFattyAcids;
 
     @DecimalMin("0")
-    @Column(columnDefinition = "DOUBLE PRECISION")
     private Double oneSaturatedFattyAcids;
 
     @DecimalMin("0")
-    @Column(columnDefinition = "DOUBLE PRECISION")
     private Double multiSaturatedFattyAcids;
 
     @DecimalMin("0")
-    @Column(columnDefinition = "DOUBLE PRECISION")
     private Double cholesterol;
 
     @DecimalMin("0")
-    @Column(columnDefinition = "DOUBLE PRECISION")
     private Double saccharose;
 
     @DecimalMin("0")
-    @Column(columnDefinition = "DOUBLE PRECISION")
     private Double cellulose;
 
     @DecimalMin("0")
-    @Column(columnDefinition = "DOUBLE PRECISION")
     private Double calcium;
 
     @DecimalMin("0")
-    @Column(columnDefinition = "DOUBLE PRECISION")
     private Double magnesium;
 
     @DecimalMin("0")
-    @Column(columnDefinition = "DOUBLE PRECISION")
     private Double iron;
 
     @DecimalMin("0")
-    @Column(columnDefinition = "DOUBLE PRECISION")
     private Double zinc;
 
     @DecimalMin("0")
-    @Column(columnDefinition = "DOUBLE PRECISION")
     private Double vitaminD;
 
     @DecimalMin("0")
-    @Column(columnDefinition = "DOUBLE PRECISION")
     private Double vitaminB1;
 
     @DecimalMin("0")
-    @Column(columnDefinition = "DOUBLE PRECISION")
     private Double vitaminB2;
 
     @DecimalMin("0")
-    @Column(columnDefinition = "DOUBLE PRECISION")
     private Double vitaminPp;
 
     @DecimalMin("0")
-    @Column(columnDefinition = "DOUBLE PRECISION")
     private Double vitaminB6;
 
     @DecimalMin("0")
-    @Column(columnDefinition = "DOUBLE PRECISION")
     private Double folicAcid;
 
     @DecimalMin("0")
-    @Column(columnDefinition = "DOUBLE PRECISION")
     private Double vitaminB12;
 
     @DecimalMin("0")
-    @Column(columnDefinition = "DOUBLE PRECISION")
     private Double vitaminC;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -163,12 +146,13 @@ public class Product extends BaseEntity {
     private Set<ProductCategory> categories = new HashSet<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
+    @JsonIgnore
     private Set<Like> likes = new LinkedHashSet<>();
 
-    @Column(name = "likes_plus", columnDefinition = "INTEGER DEFAULT 0")
+    @Column(name = "likes_plus")
     private int likesPlus;
 
-    @Column(name = "likes_minus", columnDefinition = "INTEGER DEFAULT 0")
+    @Column(name = "likes_minus")
     private int likesMinus;
 
     @Transient
@@ -179,6 +163,9 @@ public class Product extends BaseEntity {
 
     @Transient
     private Double amountOfProteinExchangers;
+
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+    private DateTime addDate;
 
     public Product() {
 
@@ -568,5 +555,13 @@ public class Product extends BaseEntity {
     public void setLikesMinus(int likesMinus) {
 
         this.likesMinus = likesMinus;
+    }
+
+    public DateTime getAddDate() {
+        return addDate;
+    }
+
+    public void setAddDate(DateTime addDate) {
+        this.addDate = addDate;
     }
 }

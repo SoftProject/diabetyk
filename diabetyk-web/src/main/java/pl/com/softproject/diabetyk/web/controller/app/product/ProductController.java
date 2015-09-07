@@ -1,6 +1,7 @@
 package pl.com.softproject.diabetyk.web.controller.app.product;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -49,13 +50,22 @@ public class ProductController extends BaseController {
         return "/app/product/list";
     }
 
-    @RequestMapping(value = "/list/json", method = RequestMethod.GET, produces = "application/json;charset=utf8")
+    @RequestMapping(value = "/list/json", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public List<Map> listJson() {
 
         logCalledMethod();
 
         return productHelper.getProductsList();
+    }
+
+    @RequestMapping(value = "/list/json/{lastCheckDate}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Object updateProductList(@PathVariable("lastCheckDate") String lastCheckDate) {
+
+        logCalledMethod();
+
+        return productHelper.updateProductList(lastCheckDate);
     }
 
     @RequestMapping(value = "/{productId}/details", method = RequestMethod.GET)

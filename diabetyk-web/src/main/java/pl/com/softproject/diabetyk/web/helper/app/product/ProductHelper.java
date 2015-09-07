@@ -1,5 +1,8 @@
 package pl.com.softproject.diabetyk.web.helper.app.product;
 
+import org.apache.commons.validator.routines.DateValidator;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomCollectionEditor;
 import org.springframework.security.access.AccessDeniedException;
@@ -18,13 +21,11 @@ import pl.com.softproject.diabetyk.core.service.LikeService;
 import pl.com.softproject.diabetyk.core.service.ProductCategoryService;
 import pl.com.softproject.diabetyk.core.service.ProductService;
 import pl.com.softproject.diabetyk.core.service.UserDataService;
+import pl.com.softproject.diabetyk.web.dto.CollectionDTO;
 import pl.com.softproject.diabetyk.web.service.CacheService;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+
+import java.util.*;
 
 /**
  * Class ProductHelper
@@ -145,10 +146,10 @@ public class ProductHelper {
             Map<String, Object> map = new HashMap<>(4);
             map.put("id", product.getId());
             map.put("name", product.getName());
-            map.put("isModerated", product.isModerated() ? "Tak" : "Nie");
+            map.put("isModerated", product.isModerated() ? "yes" : "no");
             map.put("editable",
                     product.getAuthor().getId().equals(cacheService.getLoggedUserData().getId())
-                    ? "yes" : "no");
+                            ? "yes" : "no");
 
             list.add(map);
         }
@@ -224,5 +225,25 @@ public class ProductHelper {
         newLike.setType(LikeType.DISLIKE);
 
         likeService.add(newLike);
+    }
+
+    public Object updateProductList(String lastCheckDate) {
+
+        List<Product> productList = new ArrayList<>();
+        String pattern = "yyyy-MM-dd-HH-mm-ss";
+
+        if(DateValidator.getInstance().isValid(lastCheckDate, pattern)) {
+
+            DateTime dateTime = DateTime.parse(lastCheckDate, DateTimeFormat.forPattern(pattern));
+
+            if (userDataService
+                    .isUserInAnyRole(Role.ROLE_MODERATOR, Role.ROLE_ADMIN, Role.ROLE_SYS_ADMIN)) {
+                productList = productService.findByAddDateGreaterThan(dateTime);
+            }
+        }
+
+
+        return new CollectionDTO<>(productList).getCollection();
+
     }
 }

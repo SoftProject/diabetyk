@@ -67,6 +67,8 @@
         <javassist.version>3.18.1-GA</javassist.version>
         <hibernate.version>4.3.5.Final</hibernate.version>
         <assertj-core.version>1.6.1</assertj-core.version>
+        <joda-time.version>2.8.2</joda-time.version>
+        <jadira.usertype.version>4.0.0.GA</jadira.usertype.version>
     </properties>
 
     <dependencyManagement>
@@ -350,6 +352,19 @@
                 <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-validator</artifactId>
                 <version>5.0.3.Final</version>
+            </dependency>
+
+            <!-- Joda Time -->
+            <dependency>
+                <groupId>joda-time</groupId>
+                <artifactId>joda-time</artifactId>
+                <version>${joda-time.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jadira.usertype</groupId>
+                <artifactId>usertype.core</artifactId>
+                <version>${jadira.usertype.version}</version>
             </dependency>
 
         </dependencies>
