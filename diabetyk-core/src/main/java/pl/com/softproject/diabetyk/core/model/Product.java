@@ -2,6 +2,7 @@ package pl.com.softproject.diabetyk.core.model;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.Type;
+import org.hibernate.validator.constraints.URL;
 import org.joda.time.DateTime;
 
 import java.util.HashSet;
@@ -20,6 +21,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 /**
@@ -166,6 +168,13 @@ public class Product extends BaseEntity {
 
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     private DateTime addDate;
+
+    @Size(max = 255)
+    @URL
+    private String sourceLink;
+
+    @Size(max = 255)
+    private String sourceDescription;
 
     public Product() {
 
@@ -563,5 +572,21 @@ public class Product extends BaseEntity {
 
     public void setAddDate(DateTime addDate) {
         this.addDate = addDate;
+    }
+
+    public String getSourceLink() {
+        return sourceLink;
+    }
+
+    public void setSourceLink(String sourceLink) {
+        this.sourceLink = sourceLink;
+    }
+
+    public String getSourceDescription() {
+        return sourceDescription;
+    }
+
+    public void setSourceDescription(String sourceDescription) {
+        this.sourceDescription = sourceDescription;
     }
 }

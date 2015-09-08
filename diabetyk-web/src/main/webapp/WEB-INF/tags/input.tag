@@ -17,6 +17,7 @@
 <%@attribute name="step" required="false" type="java.lang.String" %>
 <%@attribute name="min" required="false" type="java.lang.Integer" %>
 <%@attribute name="max" required="false" type="java.lang.Integer" %>
+<%@attribute name="title" required="false" type="java.lang.String" %>
 
 <c:if test="${empty type}">
     <c:set var="type" value="text"/>
@@ -57,14 +58,14 @@
                 <c:when test="${empty placeholder}">
                     <form:input required="${required}" readonly="${readonly ? 'true' : 'false'}" path="${path}"
                                 cssClass="${empty cssClass ? 'form-control' : cssClass}" type="${type}" step="${step}"
-                                min="${min}" max="${max}"/>
+                                min="${min}" max="${max}" title="${title}"/>
                 </c:when>
 
                 <c:otherwise>
                     <form:input required="${required}" placeholder="${placeholder}"
                                 readonly="${readonly ? 'true' : 'false'}" path="${path}"
                                 cssClass="${empty cssClass ? 'form-control' : cssClass}" type="${type}" step="${step}"
-                                min="${min}" max="${max}"/>
+                                min="${min}" max="${max}" title="${title}"/>
                 </c:otherwise>
             </c:choose>
             <p class="help-block"></p>
