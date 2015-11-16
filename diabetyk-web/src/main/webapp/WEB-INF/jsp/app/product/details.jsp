@@ -62,6 +62,12 @@
                                     <tr>
                                         <td><t:row value="${product.description}" description="Opis"/></td>
                                     </tr>
+                                    <sec:authorize access="hasRole('ROLE_ADMIN')">
+                                        <tr>
+                                            <td><t:row value="<a href='${product.sourceLink}'>${product.sourceDescription}</a>" description="Żródło, z którego pobrane zostały dane"/>
+                                            </td>
+                                        </tr>
+                                    </sec:authorize>
                                     <tr class="success">
                                         <td><t:row value="${product.fat}" description="Tłuszcz"/></td>
                                     </tr>
